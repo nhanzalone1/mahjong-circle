@@ -27,23 +27,21 @@ export function RSVPButtons({ sessionId, currentResponse, currentNote }: Props) 
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <div className="space-y-3">
       {/* Response buttons */}
-      <div style={{ display: "flex", gap: "8px" }}>
+      <div className="flex gap-2">
         {responses.map((r) => (
           <button
             key={r.value}
             onClick={() => handleRSVP(r.value)}
             disabled={isPending}
-            className={currentResponse === r.value ? "btn-jade" : "btn-ghost"}
-            style={{
-              flex: 1,
-              padding: "12px 8px",
-              fontSize: "14px",
-              opacity: isPending ? 0.7 : 1,
-            }}
+            className={`flex-1 py-3 px-2 rounded-xl font-semibold text-sm transition-all ${
+              currentResponse === r.value
+                ? "bg-[#1a3d2b] text-white"
+                : "bg-white text-gray-600 border border-gray-200 hover:border-gray-300"
+            } ${isPending ? "opacity-70" : ""}`}
           >
-            <span style={{ marginRight: "4px" }}>{r.icon}</span>
+            <span className="mr-1">{r.icon}</span>
             {r.label}
           </button>
         ))}
@@ -52,35 +50,25 @@ export function RSVPButtons({ sessionId, currentResponse, currentNote }: Props) 
       {/* Note toggle */}
       <button
         onClick={() => setShowNoteInput(!showNoteInput)}
-        style={{
-          background: "none",
-          border: "none",
-          color: "var(--cream-muted)",
-          fontSize: "13px",
-          cursor: "pointer",
-          textAlign: "left",
-          padding: "4px 0",
-        }}
+        className="text-gray-500 text-sm hover:text-gray-700 text-left py-1"
       >
         {showNoteInput ? "− Hide note" : "+ Add a note (e.g., \"Bringing snacks\")"}
       </button>
 
       {/* Note input */}
       {showNoteInput && (
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className="flex gap-2">
           <input
             type="text"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="e.g., Bringing snacks"
-            className="input-field"
-            style={{ flex: 1 }}
+            className="input flex-1"
           />
           <button
             onClick={() => currentResponse && handleRSVP(currentResponse)}
             disabled={isPending || !currentResponse}
-            className="btn-ghost"
-            style={{ padding: "12px 16px", fontSize: "14px" }}
+            className="btn-ghost py-3 px-4 text-sm"
           >
             Save
           </button>

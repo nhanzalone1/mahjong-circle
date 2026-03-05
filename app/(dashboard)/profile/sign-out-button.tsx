@@ -21,7 +21,7 @@ export default function SignOutButton() {
     <button
       onClick={handleSignOut}
       disabled={isPending}
-      className="w-11 h-11 rounded-xl bg-surface flex items-center justify-center text-cream/70 hover:text-red-400 transition shadow-card disabled:opacity-50"
+      className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-gray-400 hover:text-red-500 transition shadow-sm disabled:opacity-50"
     >
       <LogOut size={20} />
     </button>

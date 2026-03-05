@@ -20,28 +20,21 @@ export default async function NewSessionPage() {
 
   if (!membership?.groupId) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <div className="space-y-6 animate-fade-up">
         <Link
           href="/sessions"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            color: "var(--cream-muted)",
-            textDecoration: "none",
-            fontSize: "14px",
-          }}
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm"
         >
           <ArrowLeft size={16} />
           Back
         </Link>
 
-        <div className="tile-card" style={{ padding: "40px", textAlign: "center" }}>
-          <p style={{ fontSize: "40px", marginBottom: "12px" }}>🀄</p>
-          <p style={{ fontWeight: 600, fontSize: "16px", marginBottom: "8px" }}>
+        <div className="card p-10 text-center">
+          <p className="text-5xl mb-3">🀄</p>
+          <p className="font-semibold text-[#0D1F17] text-lg mb-2">
             Join a circle first
           </p>
-          <p style={{ color: "var(--cream-muted)", fontSize: "14px" }}>
+          <p className="text-gray-500 text-sm">
             You need to be in a circle to schedule game nights.
           </p>
         </div>
@@ -50,26 +43,18 @@ export default async function NewSessionPage() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="space-y-6 animate-fade-up">
       {/* Header */}
-      <div className="animate-fade-up">
+      <div>
         <Link
           href="/sessions"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            color: "var(--cream-muted)",
-            textDecoration: "none",
-            fontSize: "14px",
-            marginBottom: "12px",
-          }}
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm mb-3"
         >
           <ArrowLeft size={16} />
           Back
         </Link>
-        <h1 style={{ fontSize: "28px", fontWeight: 700 }}>Schedule a Night</h1>
-        <p style={{ color: "var(--cream-muted)", fontSize: "14px", marginTop: "4px" }}>
+        <h1 className="font-serif text-2xl font-bold text-[#0D1F17]">Schedule a Night</h1>
+        <p className="text-gray-500 text-sm mt-1">
           Set up the next mahjong gathering
         </p>
       </div>

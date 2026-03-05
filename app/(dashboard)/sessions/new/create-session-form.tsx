@@ -46,57 +46,46 @@ export function CreateSessionForm({ groupId }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div
-          style={{
-            padding: "12px 16px",
-            background: "rgba(255,100,80,0.1)",
-            border: "1px solid rgba(255,100,80,0.3)",
-            borderRadius: "8px",
-            color: "#ff8070",
-            fontSize: "14px",
-          }}
-        >
+        <div className="p-4 bg-red-100 border border-red-200 rounded-xl text-red-600 text-sm">
           {error}
         </div>
       )}
 
       {/* Date */}
-      <div className="tile-card" style={{ padding: "16px" }}>
-        <label style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", fontSize: "14px", color: "var(--cream-muted)" }}>
-          <Calendar size={16} />
+      <div className="card p-4">
+        <label className="flex items-center gap-2 mb-2.5 text-sm text-gray-500">
+          <Calendar size={16} className="text-[#C9A84C]" />
           Date
         </label>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="input-field"
+          className="input"
           min={new Date().toISOString().split("T")[0]}
-          style={{ colorScheme: "dark" }}
         />
       </div>
 
       {/* Time */}
-      <div className="tile-card" style={{ padding: "16px" }}>
-        <label style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", fontSize: "14px", color: "var(--cream-muted)" }}>
-          <Clock size={16} />
+      <div className="card p-4">
+        <label className="flex items-center gap-2 mb-2.5 text-sm text-gray-500">
+          <Clock size={16} className="text-[#C9A84C]" />
           Time
         </label>
         <input
           type="time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          className="input-field"
-          style={{ colorScheme: "dark" }}
+          className="input"
         />
       </div>
 
       {/* Location */}
-      <div className="tile-card" style={{ padding: "16px" }}>
-        <label style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", fontSize: "14px", color: "var(--cream-muted)" }}>
-          <MapPin size={16} />
+      <div className="card p-4">
+        <label className="flex items-center gap-2 mb-2.5 text-sm text-gray-500">
+          <MapPin size={16} className="text-[#C9A84C]" />
           Location
         </label>
         <input
@@ -104,23 +93,22 @@ export function CreateSessionForm({ groupId }: Props) {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           placeholder="e.g., Auntie Mei's House"
-          className="input-field"
+          className="input"
         />
       </div>
 
       {/* Notes */}
-      <div className="tile-card" style={{ padding: "16px" }}>
-        <label style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", fontSize: "14px", color: "var(--cream-muted)" }}>
-          <FileText size={16} />
+      <div className="card p-4">
+        <label className="flex items-center gap-2 mb-2.5 text-sm text-gray-500">
+          <FileText size={16} className="text-[#C9A84C]" />
           Notes (optional)
         </label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Any special instructions or reminders"
-          className="input-field"
+          className="input resize-y min-h-[80px]"
           rows={3}
-          style={{ resize: "vertical", minHeight: "80px" }}
         />
       </div>
 
@@ -128,13 +116,7 @@ export function CreateSessionForm({ groupId }: Props) {
       <button
         type="submit"
         disabled={isPending}
-        className="btn-jade"
-        style={{
-          padding: "16px",
-          fontSize: "16px",
-          fontWeight: 600,
-          opacity: isPending ? 0.7 : 1,
-        }}
+        className="btn-primary w-full py-4 text-base"
       >
         {isPending ? "Creating..." : "Create Session"}
       </button>

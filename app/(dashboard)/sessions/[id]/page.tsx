@@ -105,81 +105,56 @@ export default async function SessionDetailPage({
   const cantList = attendees.filter((a) => a.response === "cant");
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="space-y-6 animate-fade-up">
       {/* Back link */}
       <Link
         href="/sessions"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-          color: "var(--cream-muted)",
-          textDecoration: "none",
-          fontSize: "14px",
-        }}
+        className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm"
       >
         <ArrowLeft size={16} />
         Back to Sessions
       </Link>
 
       {/* Header Card */}
-      <div className="tile-card animate-fade-up" style={{ padding: "0", overflow: "hidden" }}>
+      <div className="card overflow-hidden">
         {/* Image area */}
-        <div
-          style={{
-            height: "160px",
-            background: "linear-gradient(135deg, var(--bg-raised) 0%, rgba(17,212,131,0.15) 100%)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "56px",
-          }}
-        >
-          🀄
+        <div className="h-40 bg-gradient-to-br from-[#1a3d2b]/10 to-[#C9A84C]/10 flex items-center justify-center">
+          <span className="text-6xl">🀄</span>
         </div>
 
-        <div style={{ padding: "20px" }}>
+        <div className="p-5">
           {/* Status badge */}
-          <span
-            style={{
-              background: isSessionPast
-                ? "rgba(168,136,128,0.15)"
-                : "rgba(17,212,131,0.15)",
-              color: isSessionPast ? "var(--cream-muted)" : "var(--jade)",
-              padding: "4px 12px",
-              borderRadius: "100px",
-              fontSize: "11px",
-              fontWeight: 600,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
+          <span className={`inline-block px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
+            isSessionPast
+              ? "bg-gray-100 text-gray-500"
+              : "bg-green-100 text-green-700"
+          }`}>
             {isSessionPast ? "Completed" : "Upcoming"}
           </span>
 
-          <h1 style={{ fontSize: "24px", fontWeight: 700, marginTop: "12px" }}>
+          <h1 className="text-2xl font-bold text-[#0D1F17] mt-3">
             {session.location ?? `${hostProfile?.displayName ?? "TBD"}'s Place`}
           </h1>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "12px", color: "var(--cream-muted)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <Calendar size={16} />
-              <span>{format(session.date, "EEEE, MMMM d, yyyy")}</span>
+          <div className="flex flex-col gap-2 mt-3 text-gray-500">
+            <div className="flex items-center gap-2.5">
+              <Calendar size={16} className="text-[#C9A84C]" />
+              <span className="text-sm">{format(session.date, "EEEE, MMMM d, yyyy")}</span>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <Clock size={16} />
-              <span>{format(session.date, "h:mm a")}</span>
+            <div className="flex items-center gap-2.5">
+              <Clock size={16} className="text-[#C9A84C]" />
+              <span className="text-sm">{format(session.date, "h:mm a")}</span>
             </div>
             {session.location && (
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <MapPin size={16} />
-                <span>{session.location}</span>
+              <div className="flex items-center gap-2.5">
+                <MapPin size={16} className="text-[#C9A84C]" />
+                <span className="text-sm">{session.location}</span>
               </div>
             )}
           </div>
 
           {session.notes && (
-            <p style={{ marginTop: "16px", color: "var(--cream-muted)", fontSize: "14px" }}>
+            <p className="mt-4 text-gray-500 text-sm">
               {session.notes}
             </p>
           )}
@@ -188,14 +163,14 @@ export default async function SessionDetailPage({
 
       {/* Winner Section (if completed) */}
       {result && (
-        <div className="tile-card animate-fade-up" style={{ padding: "20px", background: "linear-gradient(135deg, rgba(201,168,76,0.1) 0%, var(--bg-raised) 100%)", border: "1px solid rgba(201,168,76,0.3)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{ fontSize: "32px" }}>🏆</span>
+        <div className="card p-5 bg-gradient-to-br from-[#C9A84C]/10 to-white border border-[#C9A84C]/30">
+          <div className="flex items-center gap-3">
+            <span className="text-4xl">🏆</span>
             <div>
-              <p style={{ fontSize: "12px", color: "var(--gold)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <p className="text-xs text-[#C9A84C] font-semibold uppercase tracking-wider">
                 Winner
               </p>
-              <p style={{ fontSize: "20px", fontWeight: 700 }}>{winnerName}</p>
+              <p className="text-xl font-bold text-[#0D1F17]">{winnerName}</p>
             </div>
           </div>
         </div>
@@ -203,8 +178,8 @@ export default async function SessionDetailPage({
 
       {/* RSVP Section (if upcoming) */}
       {!isSessionPast && (
-        <div className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
-          <p className="section-label" style={{ marginBottom: "12px" }}>Your RSVP</p>
+        <div>
+          <p className="section-title mb-3">Your RSVP</p>
           <RSVPButtons
             sessionId={id}
             currentResponse={myRsvp?.response ?? null}
@@ -215,22 +190,22 @@ export default async function SessionDetailPage({
 
       {/* Record Winner (if past and no result) */}
       {isSessionPast && !result && (
-        <div className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
-          <p className="section-label" style={{ marginBottom: "12px" }}>Record Winner</p>
+        <div>
+          <p className="section-title mb-3">Record Winner</p>
           <RecordWinnerForm sessionId={id} members={members} />
         </div>
       )}
 
       {/* Attendees */}
-      <div className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-          <p className="section-label">Who&apos;s Coming?</p>
-          <span style={{ fontSize: "13px", color: "var(--jade)" }}>
+      <div>
+        <div className="flex justify-between items-center mb-3">
+          <p className="section-title">Who&apos;s Coming?</p>
+          <span className="text-sm text-[#1a3d2b]">
             {goingList.length + maybeList.length} total
           </span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div className="space-y-2">
           {/* Going */}
           {goingList.map((attendee) => (
             <AttendeeCard key={attendee.userId} attendee={attendee} />
@@ -247,8 +222,8 @@ export default async function SessionDetailPage({
           ))}
 
           {attendees.length === 0 && (
-            <div className="tile-card" style={{ padding: "24px", textAlign: "center" }}>
-              <p style={{ color: "var(--cream-muted)", fontSize: "14px" }}>
+            <div className="card p-6 text-center">
+              <p className="text-gray-500 text-sm">
                 No RSVPs yet. Be the first!
               </p>
             </div>
@@ -261,46 +236,31 @@ export default async function SessionDetailPage({
 
 function AttendeeCard({ attendee }: { attendee: Attendee }) {
   const statusConfig = {
-    coming: { label: "Coming", className: "badge--going", color: "var(--jade)" },
-    maybe: { label: "Maybe", className: "badge--maybe", color: "var(--gold)" },
-    cant: { label: "Can't Make It", className: "badge--out", color: "#ff8070" },
+    coming: { label: "Coming", className: "badge-coming" },
+    maybe: { label: "Maybe", className: "badge-maybe" },
+    cant: { label: "Can't", className: "badge-cant" },
   } as const;
 
   const status = statusConfig[attendee.response as keyof typeof statusConfig] ?? statusConfig.maybe;
 
+  const AVATAR_COLORS = [
+    "bg-emerald-500", "bg-amber-500", "bg-rose-500", "bg-violet-500",
+    "bg-cyan-500", "bg-orange-500", "bg-teal-500", "bg-pink-500",
+  ];
+  const colorIndex = attendee.name.charCodeAt(0) % AVATAR_COLORS.length;
+
   return (
-    <div
-      className="tile-card"
-      style={{
-        padding: "14px 16px",
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-      }}
-    >
+    <div className="card p-4 flex items-center gap-3">
       {/* Avatar */}
-      <div
-        style={{
-          width: "40px",
-          height: "40px",
-          borderRadius: "50%",
-          background: `hsl(${(attendee.name.charCodeAt(0) * 37) % 360}, 40%, 30%)`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "16px",
-          fontWeight: 700,
-          flexShrink: 0,
-        }}
-      >
+      <div className={`w-10 h-10 rounded-full ${AVATAR_COLORS[colorIndex]} flex items-center justify-center text-white font-semibold flex-shrink-0`}>
         {attendee.name.charAt(0).toUpperCase()}
       </div>
 
       {/* Info */}
-      <div style={{ flex: 1 }}>
-        <p style={{ fontWeight: 600, fontSize: "15px" }}>{attendee.name}</p>
+      <div className="flex-1 min-w-0">
+        <p className="font-semibold text-[#0D1F17]">{attendee.name}</p>
         {attendee.note && (
-          <p style={{ color: "var(--cream-muted)", fontSize: "13px" }}>
+          <p className="text-sm text-gray-500 truncate">
             {attendee.note}
           </p>
         )}

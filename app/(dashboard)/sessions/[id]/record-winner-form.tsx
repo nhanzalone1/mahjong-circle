@@ -22,19 +22,15 @@ export function RecordWinnerForm({ sessionId, members }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-      <div className="tile-card" style={{ padding: "16px" }}>
-        <label style={{ display: "block", marginBottom: "8px", fontSize: "14px", color: "var(--cream-muted)" }}>
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <div className="card p-4">
+        <label className="block mb-2 text-sm text-gray-500">
           Who won tonight?
         </label>
         <select
           value={selectedWinner}
           onChange={(e) => setSelectedWinner(e.target.value)}
-          className="input-field"
-          style={{
-            appearance: "none",
-            cursor: "pointer",
-          }}
+          className="input cursor-pointer"
         >
           <option value="">Select winner...</option>
           {members.map((member) => (
@@ -48,12 +44,7 @@ export function RecordWinnerForm({ sessionId, members }: Props) {
       <button
         type="submit"
         disabled={isPending || !selectedWinner}
-        className="btn-gold"
-        style={{
-          padding: "14px",
-          fontSize: "15px",
-          opacity: isPending || !selectedWinner ? 0.6 : 1,
-        }}
+        className="btn-primary w-full py-3.5 text-base disabled:opacity-60"
       >
         {isPending ? "Recording..." : "🏆 Record Winner"}
       </button>

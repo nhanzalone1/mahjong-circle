@@ -56,11 +56,11 @@ export default async function ProfilePage() {
       <div className="flex items-center justify-between">
         <Link
           href="/dashboard"
-          className="w-11 h-11 rounded-xl bg-[#152b1e] flex items-center justify-center text-cream/70 hover:text-cream transition"
+          className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition shadow-sm"
         >
           <ChevronLeft size={20} />
         </Link>
-        <h1 className="font-serif text-xl font-bold text-cream">Profile</h1>
+        <h1 className="font-serif text-xl font-bold text-[#0D1F17]">Profile</h1>
         <SignOutButton />
       </div>
 
@@ -68,24 +68,24 @@ export default async function ProfilePage() {
       <div className="text-center pt-4 pb-2">
         {/* Avatar with gold ring */}
         <div className="relative inline-block mb-5">
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-4xl font-bold text-white ring-4 ring-gold/40 ring-offset-4 ring-offset-jade">
+          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-4xl font-bold text-white ring-4 ring-[#C9A84C]/40 ring-offset-4 ring-offset-[#F5ECD7]">
             {initials}
           </div>
         </div>
 
         {/* Name */}
-        <h2 className="font-serif text-2xl font-bold text-cream mb-3">
+        <h2 className="font-serif text-2xl font-bold text-[#0D1F17] mb-3">
           {profile.displayName}
         </h2>
 
-        {/* Rank Badge - gold text on dark bg */}
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#152b1e]">
-          <span className="text-gold text-sm font-semibold tracking-wide">
+        {/* Rank Badge */}
+        <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#C9A84C]/15">
+          <span className="text-[#a08339] text-sm font-semibold tracking-wide">
             {profile.rankTitle || "Novice"}
           </span>
         </div>
 
-        <p className="text-sm text-cream-muted mt-3">
+        <p className="text-sm text-gray-500 mt-3">
           Member since {memberSince}
         </p>
       </div>
@@ -108,47 +108,47 @@ export default async function ProfilePage() {
 
       {/* Invite Code Card */}
       <div className="card p-6">
-        <p className="text-xs text-cream-muted uppercase tracking-wider mb-3">Your Invite Code</p>
+        <p className="text-xs text-gray-500 uppercase tracking-wider mb-3">Your Invite Code</p>
         <div className="flex items-center justify-between">
-          <p className="font-mono text-3xl font-bold text-gold tracking-[0.2em]">
+          <p className="font-mono text-3xl font-bold text-[#C9A84C] tracking-[0.2em]">
             {profile.inviteCode}
           </p>
           <CopyCodeButton code={profile.inviteCode} />
         </div>
-        <p className="text-sm text-cream-muted mt-3">
+        <p className="text-sm text-gray-500 mt-3">
           Share this code with friends to connect
         </p>
       </div>
 
       {/* Friends Link */}
       <Link href="/friends">
-        <div className="card p-5 flex items-center gap-4 hover:bg-[#1a3325] transition">
-          <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
-            <Users size={22} className="text-gold" />
+        <div className="card p-5 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-[#C9A84C]/10 flex items-center justify-center">
+            <Users size={22} className="text-[#C9A84C]" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-cream">Friends</p>
-            <p className="text-sm text-cream-muted">
+            <p className="font-semibold text-[#0D1F17]">Friends</p>
+            <p className="text-sm text-gray-500">
               {stats.friends === 0 ? "Add friends with invite codes" : `${stats.friends} friend${stats.friends === 1 ? "" : "s"}`}
             </p>
           </div>
-          <ChevronRight size={20} className="text-cream/40" />
+          <ChevronRight size={20} className="text-gray-300" />
         </div>
       </Link>
 
       {/* Groups Link */}
       <Link href="/groups">
-        <div className="card p-5 flex items-center gap-4 hover:bg-[#1a3325] transition">
-          <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
-            <span className="text-xl">🀄</span>
+        <div className="card p-5 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-[#1a3d2b]/10 flex items-center justify-center">
+            <Users size={22} className="text-[#1a3d2b]" />
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-cream">Circles</p>
-            <p className="text-sm text-cream-muted">
+            <p className="font-semibold text-[#0D1F17]">Circles</p>
+            <p className="text-sm text-gray-500">
               Manage your mahjong groups
             </p>
           </div>
-          <ChevronRight size={20} className="text-cream/40" />
+          <ChevronRight size={20} className="text-gray-300" />
         </div>
       </Link>
     </div>

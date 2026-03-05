@@ -85,11 +85,11 @@ export default async function SessionsPage() {
     <div className="space-y-8 animate-fade-up">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="font-serif text-2xl font-bold text-cream">
+        <h1 className="font-serif text-2xl font-bold text-[#0D1F17]">
           Games
         </h1>
         <Link href="/sessions/new">
-          <button className="w-11 h-11 rounded-xl bg-gold flex items-center justify-center text-jade hover:bg-gold-light transition">
+          <button className="w-11 h-11 rounded-xl bg-[#1a3d2b] flex items-center justify-center text-white hover:bg-[#153026] transition shadow-sm">
             <Plus size={20} />
           </button>
         </Link>
@@ -97,8 +97,8 @@ export default async function SessionsPage() {
 
       {allSessions.length === 0 ? (
         /* Elegant Empty State */
-        <div className="text-center py-16">
-          <p className="text-cream/50 mb-6">No games scheduled yet</p>
+        <div className="card p-10 text-center">
+          <p className="text-gray-500 mb-6">No games scheduled yet</p>
           <Link href="/sessions/new">
             <button className="btn-ghost">
               Create Your First Game
@@ -125,23 +125,23 @@ export default async function SessionsPage() {
 
                   return (
                     <Link key={session.id} href={`/sessions/${session.id}`}>
-                      <div className="card p-5 flex items-center gap-4 hover:bg-[#1a3325] transition">
-                        <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
-                          <Home size={20} className="text-gold" />
+                      <div className="card p-5 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-[#C9A84C]/10 flex items-center justify-center">
+                          <Home size={20} className="text-[#C9A84C]" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-cream truncate">
+                          <p className="font-semibold text-[#0D1F17] truncate">
                             {session.location || "Game Night"}
                           </p>
-                          <p className="text-sm text-cream-muted">
+                          <p className="text-sm text-gray-500">
                             {dateStr} · {timeStr}
                           </p>
                         </div>
-                        <div className="flex items-center gap-2 text-cream-muted">
+                        <div className="flex items-center gap-2 text-gray-500">
                           <Users size={14} />
                           <span className="text-sm">{session.rsvpCount}</span>
                         </div>
-                        <ChevronRight size={18} className="text-cream/30" />
+                        <ChevronRight size={18} className="text-gray-300" />
                       </div>
                     </Link>
                   );
@@ -168,13 +168,13 @@ export default async function SessionsPage() {
 
                   return (
                     <Link key={session.id} href={`/sessions/${session.id}`}>
-                      <div className="card p-5 flex items-center gap-4 hover:bg-[#1a3325] transition">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
-                          <Home size={20} className="text-cream/40" />
+                      <div className="card p-5 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+                          <Home size={20} className="text-gray-400" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-3 mb-1">
-                            <p className="font-semibold text-cream truncate">
+                            <p className="font-semibold text-[#0D1F17] truncate">
                               {session.location || "Game Night"}
                             </p>
                             {session.winnerName && (
@@ -183,21 +183,18 @@ export default async function SessionsPage() {
                               </span>
                             )}
                           </div>
-                          <p className="text-sm text-cream-muted">
+                          <p className="text-sm text-gray-500">
                             {dateStr} · {timeStr}
                           </p>
                           {session.winnerName && (
-                            <p className="text-sm text-gold mt-1">
+                            <p className="text-sm text-[#C9A84C] mt-1">
                               {session.winnerName}
                             </p>
                           )}
                         </div>
-                        <Link
-                          href={`/sessions/${session.id}`}
-                          className="text-sm text-gold hover:underline"
-                        >
+                        <span className="text-sm text-[#C9A84C] hover:underline">
                           View Details →
-                        </Link>
+                        </span>
                       </div>
                     </Link>
                   );

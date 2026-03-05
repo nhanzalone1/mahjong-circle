@@ -26,11 +26,11 @@ export default async function GroupsPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/dashboard"
-          className="w-11 h-11 rounded-xl bg-[#152b1e] flex items-center justify-center text-cream/70 hover:text-cream transition"
+          className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition shadow-sm"
         >
           <ChevronLeft size={20} />
         </Link>
-        <h1 className="font-serif text-xl font-bold text-cream">Circles</h1>
+        <h1 className="font-serif text-xl font-bold text-[#0D1F17]">Circles</h1>
         <div className="w-11" />
       </div>
 
@@ -50,13 +50,13 @@ export default async function GroupsPage() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <p className="section-title">Your Circles</p>
-          <span className="text-sm text-cream-muted">{groupsWithCounts.length}</span>
+          <span className="text-sm text-gray-500">{groupsWithCounts.length}</span>
         </div>
 
         {groupsWithCounts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-cream/40 mb-2">No circles yet</p>
-            <p className="text-sm text-cream-muted">
+          <div className="card p-10 text-center">
+            <p className="text-gray-500 mb-2">No circles yet</p>
+            <p className="text-sm text-gray-400">
               Create a circle or join one with an invite code
             </p>
           </div>
@@ -67,27 +67,27 @@ export default async function GroupsPage() {
                 key={group.id}
                 className="card p-5 flex items-center gap-4"
               >
-                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
-                  <span className="text-xl">🀄</span>
+                <div className="w-12 h-12 rounded-xl bg-[#1a3d2b]/10 flex items-center justify-center">
+                  <Users size={20} className="text-[#1a3d2b]" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="font-semibold text-cream truncate">
+                    <p className="font-semibold text-[#0D1F17] truncate">
                       {group.name}
                     </p>
                     {group.role === "admin" && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold/20 text-gold font-semibold">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#C9A84C]/15 text-[#a08339] font-semibold">
                         Admin
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-cream-muted">
+                  <p className="text-sm text-gray-500">
                     {group.memberCount} member{group.memberCount !== 1 ? "s" : ""}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-cream-muted mb-1">Code</p>
-                  <p className="font-mono text-sm text-gold">{group.inviteCode}</p>
+                  <p className="text-xs text-gray-400 mb-1">Code</p>
+                  <p className="font-mono text-sm text-[#C9A84C]">{group.inviteCode}</p>
                 </div>
               </div>
             ))}

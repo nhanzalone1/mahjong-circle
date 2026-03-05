@@ -26,14 +26,14 @@ export default function RemoveFriendButton({ friendshipId, friendName }: RemoveF
         <button
           onClick={handleRemove}
           disabled={isPending}
-          className="px-3 py-1.5 rounded-lg bg-red/20 text-red-400 text-sm font-medium hover:bg-red/30 transition disabled:opacity-50"
+          className="px-3 py-1.5 rounded-lg bg-red-100 text-red-600 text-sm font-medium hover:bg-red-200 transition disabled:opacity-50"
         >
           {isPending ? <Loader2 size={14} className="animate-spin" /> : "Remove"}
         </button>
         <button
           onClick={() => setShowConfirm(false)}
           disabled={isPending}
-          className="px-3 py-1.5 rounded-lg bg-white/10 text-cream/60 text-sm font-medium hover:bg-white/20 transition"
+          className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 text-sm font-medium hover:bg-gray-200 transition"
         >
           Cancel
         </button>
@@ -44,7 +44,7 @@ export default function RemoveFriendButton({ friendshipId, friendName }: RemoveF
   return (
     <button
       onClick={() => setShowConfirm(true)}
-      className="w-10 h-10 rounded-xl bg-surface-raised flex items-center justify-center text-cream/40 hover:text-red-400 hover:bg-red/10 transition"
+      className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition"
     >
       <Trash2 size={18} />
     </button>

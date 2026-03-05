@@ -29,11 +29,11 @@ export default async function FriendsPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/profile"
-          className="w-11 h-11 rounded-xl bg-[#152b1e] flex items-center justify-center text-cream/70 hover:text-cream transition"
+          className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-gray-400 hover:text-gray-600 transition shadow-sm"
         >
           <ChevronLeft size={20} />
         </Link>
-        <h1 className="font-serif text-xl font-bold text-cream">Friends</h1>
+        <h1 className="font-serif text-xl font-bold text-[#0D1F17]">Friends</h1>
         <div className="w-11" />
       </div>
 
@@ -42,12 +42,12 @@ export default async function FriendsPage() {
         <p className="section-title mb-3">Your Invite Code</p>
         <div className="card p-6">
           <div className="flex items-center justify-between">
-            <p className="font-mono text-3xl font-bold text-gold tracking-[0.2em]">
+            <p className="font-mono text-3xl font-bold text-[#C9A84C] tracking-[0.2em]">
               {profile.inviteCode}
             </p>
             <CopyCodeButton code={profile.inviteCode} />
           </div>
-          <p className="text-sm text-cream-muted mt-3">
+          <p className="text-sm text-gray-500 mt-3">
             Share this code with friends so they can add you
           </p>
         </div>
@@ -63,13 +63,13 @@ export default async function FriendsPage() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <p className="section-title">Your Friends</p>
-          <span className="text-sm text-cream-muted">{friends.length}</span>
+          <span className="text-sm text-gray-500">{friends.length}</span>
         </div>
 
         {friends.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-cream/40 mb-2">No friends yet</p>
-            <p className="text-sm text-cream-muted">
+          <div className="card p-10 text-center">
+            <p className="text-gray-500 mb-2">No friends yet</p>
+            <p className="text-sm text-gray-400">
               Enter a friend's invite code above to connect
             </p>
           </div>
@@ -92,10 +92,10 @@ export default async function FriendsPage() {
                     {initials}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-cream truncate">
+                    <p className="font-semibold text-[#0D1F17] truncate">
                       {friend.displayName}
                     </p>
-                    <p className="text-sm text-cream-muted">
+                    <p className="text-sm text-gray-500">
                       {friend.rankTitle || "Novice"}
                     </p>
                   </div>
