@@ -128,6 +128,22 @@ export default async function DashboardPage() {
 
         {/* Action Cards */}
         <div className="space-y-4">
+          {groupIds.length === 0 && (
+            <Link href="/groups">
+              <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition ring-1 ring-gold/30">
+                <div className="w-14 h-14 rounded-xl bg-gold/20 flex items-center justify-center">
+                  <span className="text-2xl">🀄</span>
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-cream mb-1">Create or Join a Circle</p>
+                  <p className="text-sm text-cream-muted">
+                    Start by creating your mahjong group
+                  </p>
+                </div>
+              </div>
+            </Link>
+          )}
+
           {!hasFriends && (
             <Link href="/friends">
               <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition">
@@ -144,19 +160,21 @@ export default async function DashboardPage() {
             </Link>
           )}
 
-          <Link href="/sessions/new">
-            <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition">
-              <div className="w-14 h-14 rounded-xl bg-gold/20 flex items-center justify-center">
-                <Plus size={26} className="text-gold" />
+          {groupIds.length > 0 && (
+            <Link href="/sessions/new">
+              <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition">
+                <div className="w-14 h-14 rounded-xl bg-green/20 flex items-center justify-center">
+                  <Plus size={26} className="text-green" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-cream mb-1">Create a Game Night</p>
+                  <p className="text-sm text-cream-muted">
+                    Schedule your next session
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="font-semibold text-cream mb-1">Create a Game Night</p>
-                <p className="text-sm text-cream-muted">
-                  Schedule your next session
-                </p>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          )}
         </div>
 
         {/* Quick Links */}
