@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --jade: #0D1F17;
+  --jade-light: #162A1F;
+  --jade-lighter: #1E3829;
+  --gold: #C9A84C;
+  --gold-light: #f0d080;
+  --cream: #F5ECD7;
+  --cream-muted: #8B8579;
+  --green: #22C55E;
+  --yellow: #EAB308;
+  --red: #EF4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--jade);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--jade);
+}
+
+/* Typography */
+.font-serif {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.font-sans {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+/* Custom Components */
+@layer components {
+  .card {
+    @apply bg-surface rounded-2xl border border-white/5;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .card-featured {
+    @apply bg-surface-raised rounded-2xl;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-semibold text-jade transition-all;
+    background: linear-gradient(135deg, #C9A84C 0%, #E0C068 50%, #C9A84C 100%);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 6px 24px rgba(201,168,76,0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-green {
+    @apply px-6 py-3 rounded-xl font-semibold text-white bg-green transition-all;
+    box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+  }
+
+  .btn-green:hover {
+    @apply bg-green/90;
+    box-shadow: 0 6px 24px rgba(34,197,94,0.4);
+    transform: translateY(-1px);
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-coming {
+    @apply bg-green/15 text-green border border-green/30;
+  }
+
+  .badge-maybe {
+    @apply bg-yellow/15 text-yellow border border-yellow/30;
+  }
+
+  .badge-cant {
+    @apply bg-red/15 text-red border border-red/30;
+  }
+
+  .badge-winner {
+    @apply bg-gold/20 text-gold border border-gold/30;
+  }
+
+  .badge-green {
+    @apply bg-green/15 text-green border border-green/30 uppercase tracking-wider;
+  }
+
+  .section-title {
+    @apply text-xs font-semibold tracking-[0.15em] uppercase text-gold;
+  }
+
+  .avatar {
+    @apply rounded-full flex items-center justify-center font-bold text-white;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-cream placeholder:text-cream-muted focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20 transition;
+  }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.5s ease-out forwards;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.3);
+  border-radius: 3px;
+}
