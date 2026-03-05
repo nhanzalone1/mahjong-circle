@@ -1,4 +1,4 @@
-import { Search, Clock, Users, ChevronRight, Plus, Home, Calendar } from "lucide-react";
+import { Clock, Users, ChevronRight, Plus, Home, Calendar } from "lucide-react";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -89,24 +89,19 @@ export default async function SessionsPage() {
           Games
         </h1>
         <Link href="/sessions/new">
-          <button className="w-11 h-11 rounded-xl bg-green flex items-center justify-center text-white shadow-lg shadow-green/30 hover:bg-green/90 transition">
+          <button className="w-11 h-11 rounded-xl bg-gold flex items-center justify-center text-jade hover:bg-gold-light transition">
             <Plus size={20} />
           </button>
         </Link>
       </div>
 
       {allSessions.length === 0 ? (
-        <div className="card p-8 text-center">
-          <div className="w-16 h-16 rounded-full bg-surface-raised flex items-center justify-center mx-auto mb-4">
-            <Calendar size={28} className="text-cream/40" />
-          </div>
-          <p className="text-cream/60 mb-2">No games yet</p>
-          <p className="text-sm text-cream-muted mb-6">
-            Create your first game night to get started
-          </p>
+        /* Elegant Empty State */
+        <div className="text-center py-16">
+          <p className="text-cream/50 mb-6">No games scheduled yet</p>
           <Link href="/sessions/new">
-            <button className="btn-green px-6 py-3">
-              Create Game Night
+            <button className="btn-ghost">
+              Create Your First Game
             </button>
           </Link>
         </div>
@@ -122,7 +117,6 @@ export default async function SessionsPage() {
                   const dateStr = dateObj.toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
-                    year: "numeric",
                   });
                   const timeStr = dateObj.toLocaleTimeString("en-US", {
                     hour: "numeric",
@@ -131,25 +125,23 @@ export default async function SessionsPage() {
 
                   return (
                     <Link key={session.id} href={`/sessions/${session.id}`}>
-                      <div className="card p-4 flex items-center gap-4 transition-all hover:scale-[1.01] active:scale-[0.99]">
-                        <div className="w-12 h-12 rounded-xl bg-green/20 flex items-center justify-center">
-                          <Calendar size={20} className="text-green" />
+                      <div className="card p-5 flex items-center gap-4 hover:bg-[#1a3325] transition">
+                        <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
+                          <Home size={20} className="text-gold" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-cream truncate">
                             {session.location || "Game Night"}
                           </p>
-                          <p className="text-sm text-cream-muted mb-1">
+                          <p className="text-sm text-cream-muted">
                             {dateStr} · {timeStr}
                           </p>
-                          <span className="text-xs text-cream-muted flex items-center gap-1">
-                            <Users size={12} />
-                            {session.rsvpCount} RSVP{session.rsvpCount !== 1 ? "s" : ""}
-                          </span>
                         </div>
-                        <div className="text-cream/30">
-                          <ChevronRight size={18} />
+                        <div className="flex items-center gap-2 text-cream-muted">
+                          <Users size={14} />
+                          <span className="text-sm">{session.rsvpCount}</span>
                         </div>
+                        <ChevronRight size={18} className="text-cream/30" />
                       </div>
                     </Link>
                   );
@@ -168,7 +160,6 @@ export default async function SessionsPage() {
                   const dateStr = dateObj.toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
-                    year: "numeric",
                   });
                   const timeStr = dateObj.toLocaleTimeString("en-US", {
                     hour: "numeric",
@@ -177,39 +168,36 @@ export default async function SessionsPage() {
 
                   return (
                     <Link key={session.id} href={`/sessions/${session.id}`}>
-                      <div className="card p-4 flex items-center gap-4 transition-all hover:scale-[1.01] active:scale-[0.99]">
-                        <div className="w-12 h-12 rounded-xl bg-surface-raised flex items-center justify-center">
-                          <Home size={20} className="text-gold" />
+                      <div className="card p-5 flex items-center gap-4 hover:bg-[#1a3325] transition">
+                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
+                          <Home size={20} className="text-cream/40" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2 mb-1">
+                          <div className="flex items-center gap-3 mb-1">
                             <p className="font-semibold text-cream truncate">
                               {session.location || "Game Night"}
                             </p>
                             {session.winnerName && (
-                              <span className="badge badge-winner text-[10px] shrink-0">
+                              <span className="badge-winner text-[10px]">
                                 Winner
                               </span>
                             )}
                           </div>
-                          <p className="text-sm text-cream-muted mb-1.5">
+                          <p className="text-sm text-cream-muted">
                             {dateStr} · {timeStr}
                           </p>
-                          <div className="flex items-center gap-4">
-                            {session.winnerName && (
-                              <span className="text-sm font-medium text-gold">
-                                {session.winnerName}
-                              </span>
-                            )}
-                            <span className="text-xs text-cream-muted flex items-center gap-1">
-                              <Users size={12} />
-                              {session.rsvpCount} Player{session.rsvpCount !== 1 ? "s" : ""}
-                            </span>
-                          </div>
+                          {session.winnerName && (
+                            <p className="text-sm text-gold mt-1">
+                              {session.winnerName}
+                            </p>
+                          )}
                         </div>
-                        <div className="text-cream/30">
-                          <ChevronRight size={18} />
-                        </div>
+                        <Link
+                          href={`/sessions/${session.id}`}
+                          className="text-sm text-gold hover:underline"
+                        >
+                          View Details →
+                        </Link>
                       </div>
                     </Link>
                   );

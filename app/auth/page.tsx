@@ -40,12 +40,11 @@ export default function AuthPage() {
   return (
     <div className="min-h-dvh bg-jade flex flex-col">
       {/* Top section with branding */}
-      <div className="flex-1 flex flex-col items-center justify-end pb-8 pt-16 px-8">
-        <div className="text-6xl mb-6">🀄</div>
+      <div className="flex-1 flex flex-col items-center justify-end pb-10 pt-16 px-8">
         <h1 className="font-serif text-4xl font-bold text-cream tracking-tight mb-2">
           Mahjong Night
         </h1>
-        <p className="text-cream/50 text-base">
+        <p className="text-cream/40 text-base">
           Track games with your circle
         </p>
       </div>
@@ -59,7 +58,7 @@ export default function AuthPage() {
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-cream placeholder:text-cream/30 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-all text-base"
+              className="w-full px-5 py-4 bg-[#152b1e] border border-white/10 rounded-2xl text-cream placeholder:text-cream/30 focus:outline-none focus:border-gold/40 transition-all text-base"
               autoComplete="name"
             />
           )}
@@ -69,7 +68,7 @@ export default function AuthPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-cream placeholder:text-cream/30 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-all text-base"
+            className="w-full px-5 py-4 bg-[#152b1e] border border-white/10 rounded-2xl text-cream placeholder:text-cream/30 focus:outline-none focus:border-gold/40 transition-all text-base"
             autoComplete="email"
           />
 
@@ -78,12 +77,12 @@ export default function AuthPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-cream placeholder:text-cream/30 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-all text-base"
+            className="w-full px-5 py-4 bg-[#152b1e] border border-white/10 rounded-2xl text-cream placeholder:text-cream/30 focus:outline-none focus:border-gold/40 transition-all text-base"
             autoComplete={mode === "signup" ? "new-password" : "current-password"}
           />
 
           {error && (
-            <p className="text-red-400 text-sm text-center px-2">{error}</p>
+            <p className="text-[#dc6b5f] text-sm text-center px-2">{error}</p>
           )}
 
           {message && (
@@ -93,10 +92,10 @@ export default function AuthPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-green hover:bg-green/90 disabled:bg-green/50 rounded-2xl text-white font-semibold text-base transition-all flex items-center justify-center gap-2 mt-2"
+            className="btn-gold w-full py-4 text-base font-semibold mt-2"
           >
             {loading ? (
-              <Loader2 size={20} className="animate-spin" />
+              <Loader2 size={20} className="animate-spin mx-auto" />
             ) : mode === "login" ? (
               "Sign In"
             ) : (
@@ -116,7 +115,7 @@ export default function AuthPage() {
                 setError(null);
                 setMessage(null);
               }}
-              className="text-cream font-medium ml-1 hover:underline"
+              className="text-gold font-medium ml-1.5 hover:underline"
             >
               {mode === "login" ? "Sign up" : "Sign in"}
             </button>
@@ -124,7 +123,7 @@ export default function AuthPage() {
         </div>
 
         {/* Subtle footer */}
-        <p className="text-cream/20 text-xs text-center mt-auto pt-8">
+        <p className="text-cream/15 text-xs text-center mt-auto pt-8">
           Invite-only circle
         </p>
       </div>

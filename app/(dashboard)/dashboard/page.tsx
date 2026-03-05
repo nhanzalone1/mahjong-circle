@@ -1,5 +1,6 @@
-import { Calendar, Clock, MapPin, Plus, Users } from "lucide-react";
+import { Calendar, Clock, MapPin, Plus, Users, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
@@ -13,11 +14,13 @@ const AVATAR_COLORS = [
   "bg-violet-600",
   "bg-cyan-600",
   "bg-orange-600",
+  "bg-teal-600",
+  "bg-pink-600",
 ];
 
-function Avatar({ name, size = "md", index = 0 }: { name: string; size?: "sm" | "md" | "lg"; index?: number }) {
+function Avatar({ name, size = "md", index = 0, className = "" }: { name: string; size?: "sm" | "md" | "lg"; index?: number; className?: string }) {
   const sizeClasses = {
-    sm: "w-8 h-8 text-xs",
+    sm: "w-9 h-9 text-xs",
     md: "w-11 h-11 text-sm",
     lg: "w-14 h-14 text-lg",
   };
@@ -25,7 +28,7 @@ function Avatar({ name, size = "md", index = 0 }: { name: string; size?: "sm" | 
   const initials = name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
-    <div className={`${sizeClasses[size]} ${AVATAR_COLORS[index % AVATAR_COLORS.length]} rounded-full flex items-center justify-center font-bold text-white shadow-lg`}>
+    <div className={`${sizeClasses[size]} ${AVATAR_COLORS[index % AVATAR_COLORS.length]} rounded-full flex items-center justify-center font-semibold text-white ${className}`}>
       {initials}
     </div>
   );
@@ -35,7 +38,7 @@ function StatusBadge({ status }: { status: string }) {
   const config: Record<string, { label: string; class: string }> = {
     coming: { label: "Coming", class: "badge-coming" },
     maybe: { label: "Maybe", class: "badge-maybe" },
-    cant: { label: "Can't Make It", class: "badge-cant" },
+    cant: { label: "Can't", class: "badge-cant" },
   };
 
   const { label, class: className } = config[status] || config.coming;
@@ -110,19 +113,19 @@ export default async function DashboardPage() {
   // If no next session, show welcome/empty state
   if (!nextSession) {
     return (
-      <div className="space-y-8 animate-fade-up">
+      <div className="space-y-10 animate-fade-up">
         {/* Welcome Section */}
-        <section className="text-center pt-8">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center mx-auto mb-6 shadow-xl">
-            <span className="text-4xl">🀄</span>
-          </div>
-          <h2 className="font-serif text-2xl font-bold text-cream mb-2">
-            Welcome to Mahjong Night
+        <section className="text-center pt-6">
+          <h2 className="font-serif text-3xl font-bold text-cream mb-3">
+            Welcome Back
           </h2>
-          <p className="text-cream-muted">
-            {hasFriends
-              ? "No upcoming games scheduled. Create one to get started!"
-              : "Add some friends to start playing together"}
+          <p className="text-cream-muted text-base">
+            {groupIds.length === 0
+              ? "Create or join a circle to get started"
+              : hasFriends
+                ? "No upcoming games. Schedule one!"
+                : "Add friends to your circle"
+            }
           </p>
         </section>
 
@@ -130,48 +133,51 @@ export default async function DashboardPage() {
         <div className="space-y-4">
           {groupIds.length === 0 && (
             <Link href="/groups">
-              <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition ring-1 ring-gold/30">
-                <div className="w-14 h-14 rounded-xl bg-gold/20 flex items-center justify-center">
-                  <span className="text-2xl">🀄</span>
+              <div className="card p-6 flex items-center gap-5 hover:bg-[#1a3325] transition">
+                <div className="w-14 h-14 rounded-2xl bg-gold/15 flex items-center justify-center">
+                  <Users size={26} className="text-gold" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-cream mb-1">Create or Join a Circle</p>
+                  <p className="font-semibold text-cream text-lg mb-1">Create or Join a Circle</p>
                   <p className="text-sm text-cream-muted">
-                    Start by creating your mahjong group
+                    Start your mahjong group
                   </p>
                 </div>
+                <ChevronRight size={20} className="text-cream-muted" />
               </div>
             </Link>
           )}
 
-          {!hasFriends && (
+          {groupIds.length > 0 && !hasFriends && (
             <Link href="/friends">
-              <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition">
-                <div className="w-14 h-14 rounded-xl bg-green/20 flex items-center justify-center">
-                  <Users size={26} className="text-green" />
+              <div className="card p-6 flex items-center gap-5 hover:bg-[#1a3325] transition">
+                <div className="w-14 h-14 rounded-2xl bg-gold/15 flex items-center justify-center">
+                  <Users size={26} className="text-gold" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-cream mb-1">Add Friends</p>
+                  <p className="font-semibold text-cream text-lg mb-1">Add Friends</p>
                   <p className="text-sm text-cream-muted">
                     Share your invite code to connect
                   </p>
                 </div>
+                <ChevronRight size={20} className="text-cream-muted" />
               </div>
             </Link>
           )}
 
           {groupIds.length > 0 && (
             <Link href="/sessions/new">
-              <div className="card p-5 flex items-center gap-4 hover:bg-surface-raised transition">
-                <div className="w-14 h-14 rounded-xl bg-green/20 flex items-center justify-center">
-                  <Plus size={26} className="text-green" />
+              <div className="card p-6 flex items-center gap-5 hover:bg-[#1a3325] transition">
+                <div className="w-14 h-14 rounded-2xl bg-gold/15 flex items-center justify-center">
+                  <Plus size={26} className="text-gold" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-cream mb-1">Create a Game Night</p>
+                  <p className="font-semibold text-cream text-lg mb-1">Schedule a Game Night</p>
                   <p className="text-sm text-cream-muted">
-                    Schedule your next session
+                    Pick a date and invite the group
                   </p>
                 </div>
+                <ChevronRight size={20} className="text-cream-muted" />
               </div>
             </Link>
           )}
@@ -180,17 +186,17 @@ export default async function DashboardPage() {
         {/* Quick Links */}
         <section>
           <p className="section-title mb-4">Explore</p>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <Link href="/leaderboard">
-              <div className="card p-5 text-center hover:scale-[1.02] transition">
-                <span className="text-3xl mb-2 block">🏆</span>
-                <p className="font-semibold text-cream text-sm">Leaderboard</p>
+              <div className="card p-6 text-center hover:bg-[#1a3325] transition">
+                <p className="font-semibold text-cream">Leaderboard</p>
+                <p className="text-sm text-cream-muted mt-1">View rankings</p>
               </div>
             </Link>
             <Link href="/sessions">
-              <div className="card p-5 text-center hover:scale-[1.02] transition">
-                <span className="text-3xl mb-2 block">📋</span>
-                <p className="font-semibold text-cream text-sm">Game History</p>
+              <div className="card p-6 text-center hover:bg-[#1a3325] transition">
+                <p className="font-semibold text-cream">Games</p>
+                <p className="text-sm text-cream-muted mt-1">Past sessions</p>
               </div>
             </Link>
           </div>
@@ -212,70 +218,70 @@ export default async function DashboardPage() {
   });
 
   const goingAttendees = sessionRsvps.filter(a => a.response === "coming");
-  const totalAttendees = sessionRsvps.length;
 
   return (
     <div className="space-y-8 animate-fade-up">
-      {/* Next Game Section */}
+      {/* Next Game Hero */}
       <section>
         <p className="section-title mb-4">Next Game</p>
 
-        {/* Featured Card */}
-        <div className="card-featured overflow-hidden">
+        <div className="card overflow-hidden">
           {/* Hero Image */}
-          <div className="relative h-44 bg-gradient-to-br from-surface-raised to-jade overflow-hidden">
-            {/* Mahjong tiles illustration */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="grid grid-cols-4 gap-2 transform rotate-6 scale-110 opacity-60">
-                {["🀄", "🀅", "🀆", "🀇", "🀈", "🀉", "🀊", "🀋"].map((tile, i) => (
-                  <div key={i} className="w-12 h-16 bg-cream/10 rounded-lg flex items-center justify-center text-2xl shadow-lg backdrop-blur-sm">
-                    {tile}
-                  </div>
-                ))}
-              </div>
+          <div className="relative h-48 overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=800&q=80"
+              alt="Mahjong table"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#152b1e] via-[#152b1e]/60 to-transparent" />
+
+            {/* Badge */}
+            <div className="absolute top-4 left-4">
+              <span className="badge-upcoming">Upcoming Gathering</span>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-raised via-transparent to-transparent" />
           </div>
 
           {/* Content */}
-          <div className="p-6 -mt-6 relative">
-            <span className="badge badge-green text-[10px] mb-4">
-              Upcoming Gathering
-            </span>
-
+          <div className="p-6 -mt-8 relative">
             <h2 className="font-serif text-2xl font-bold text-cream mb-4">
               {nextSession.location || "Game Night"}
             </h2>
 
             <div className="space-y-2.5 mb-6">
-              <div className="flex items-center gap-3 text-cream/70">
+              <div className="flex items-center gap-3 text-cream/80">
                 <Calendar size={16} className="text-gold" />
                 <span className="text-sm">{dateStr}</span>
               </div>
-              <div className="flex items-center gap-3 text-cream/70">
+              <div className="flex items-center gap-3 text-cream/80">
                 <Clock size={16} className="text-gold" />
                 <span className="text-sm">{timeStr}</span>
               </div>
             </div>
 
-            {/* Attendees Preview Row */}
+            {/* Attendees Preview */}
             <div className="flex items-center justify-between pt-5 border-t border-white/10">
               <div className="flex items-center gap-3">
-                {/* Stacked Avatars */}
-                <div className="flex -space-x-3">
-                  {goingAttendees.slice(0, 4).map((attendee, i) => (
-                    <div key={attendee.userId} className="ring-2 ring-surface-raised rounded-full">
-                      <Avatar name={attendee.profile?.displayName || "?"} size="sm" index={i} />
+                {goingAttendees.length > 0 ? (
+                  <>
+                    <div className="flex -space-x-2">
+                      {goingAttendees.slice(0, 5).map((attendee, i) => (
+                        <Avatar
+                          key={attendee.userId}
+                          name={attendee.profile?.displayName || "?"}
+                          size="sm"
+                          index={i}
+                          className="ring-2 ring-[#152b1e]"
+                        />
+                      ))}
                     </div>
-                  ))}
-                </div>
-                {totalAttendees > 4 && (
-                  <span className="text-sm text-cream/60">
-                    +{totalAttendees - 4} more
-                  </span>
-                )}
-                {totalAttendees === 0 && (
-                  <span className="text-sm text-cream/60">No RSVPs yet</span>
+                    <span className="text-sm text-cream/60">
+                      {goingAttendees.length} coming
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-sm text-cream/50">No RSVPs yet</span>
                 )}
               </div>
             </div>
@@ -284,20 +290,19 @@ export default async function DashboardPage() {
 
         {/* RSVP Button */}
         <Link href={`/sessions/${nextSession.id}`} className="block mt-4">
-          <button className="btn-primary w-full py-4 text-base flex items-center justify-center gap-2">
-            <span>✓</span>
+          <button className="btn-gold w-full py-4 text-base">
             RSVP Now
           </button>
         </Link>
       </section>
 
-      {/* Who's Coming Section */}
+      {/* Who's Coming */}
       {sessionRsvps.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
             <p className="section-title">Who's Coming?</p>
-            <span className="text-sm font-medium text-green">
-              {totalAttendees} total
+            <span className="text-sm text-cream-muted">
+              {sessionRsvps.length} responded
             </span>
           </div>
 
@@ -310,7 +315,7 @@ export default async function DashboardPage() {
                 <Avatar name={attendee.profile?.displayName || "?"} size="md" index={i} />
 
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-cream">
+                  <p className="font-medium text-cream">
                     {attendee.profile?.displayName || "Unknown"}
                   </p>
                   {attendee.note && (

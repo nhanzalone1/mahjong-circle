@@ -1,4 +1,4 @@
-import { ChevronLeft, Trophy, Users } from "lucide-react";
+import { ChevronLeft, Trophy } from "lucide-react";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -17,11 +17,7 @@ const AVATAR_COLORS = [
   "bg-pink-600",
 ];
 
-const RANK_ICONS: Record<number, string> = {
-  1: "🥇",
-  2: "🥈",
-  3: "🥉",
-};
+const FILTERS = ["All Time", "Season", "Monthly"];
 
 export default async function LeaderboardPage() {
   const user = await getCurrentUser();
@@ -77,32 +73,39 @@ export default async function LeaderboardPage() {
   const hasData = leaders.some(l => l.wins > 0);
 
   return (
-    <div className="space-y-6 animate-fade-up">
+    <div className="space-y-6 animate-fade-up pb-28">
       {/* Header */}
       <div className="flex items-center gap-4">
         <Link
           href="/dashboard"
-          className="w-11 h-11 rounded-xl bg-surface flex items-center justify-center text-cream/70 hover:text-cream transition shadow-card"
+          className="w-11 h-11 rounded-xl bg-[#152b1e] flex items-center justify-center text-cream/70 hover:text-cream transition"
         >
           <ChevronLeft size={20} />
         </Link>
         <h1 className="font-serif text-2xl font-bold text-cream">
-          Leaderboard
+          Season Leaderboard
         </h1>
       </div>
 
-      {/* Info */}
-      <div className="flex items-center gap-2 text-sm text-cream-muted">
-        <Users size={16} />
-        <span>You and {friendIds.length} friend{friendIds.length !== 1 ? "s" : ""}</span>
+      {/* Filter Tabs */}
+      <div className="flex gap-2">
+        {FILTERS.map((filter, i) => (
+          <button
+            key={filter}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+              i === 0
+                ? "bg-gold text-jade"
+                : "bg-[#152b1e] text-cream/60 hover:text-cream"
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
       </div>
 
       {/* Leaderboard */}
       {!hasData ? (
-        <div className="card p-8 text-center">
-          <div className="w-16 h-16 rounded-full bg-surface-raised flex items-center justify-center mx-auto mb-4">
-            <Trophy size={28} className="text-cream/40" />
-          </div>
+        <div className="card p-10 text-center">
           <p className="text-cream/60 mb-2">No wins recorded yet</p>
           <p className="text-sm text-cream-muted">
             Play some games and record wins to see the leaderboard
@@ -118,19 +121,26 @@ export default async function LeaderboardPage() {
               .toUpperCase()
               .slice(0, 2);
 
+            // Trophy colors for top 3
+            const trophyColors: Record<number, string> = {
+              1: "text-yellow-400", // Gold
+              2: "text-gray-300",   // Silver
+              3: "text-amber-600",  // Bronze
+            };
+
             return (
               <div
                 key={player.id}
-                className={`card p-4 flex items-center gap-4 transition-all hover:scale-[1.01] ${
-                  i === 0 && player.wins > 0 ? "ring-1 ring-gold/30" : ""
-                } ${player.isCurrentUser ? "bg-green/5 ring-1 ring-green/20" : ""}`}
+                className={`card p-5 flex items-center gap-4 ${
+                  player.isCurrentUser ? "ring-1 ring-gold/30" : ""
+                }`}
               >
                 {/* Rank */}
                 <div className="w-8 flex items-center justify-center">
-                  {player.wins > 0 && RANK_ICONS[player.rank] ? (
-                    <span className="text-2xl">{RANK_ICONS[player.rank]}</span>
+                  {player.wins > 0 && player.rank <= 3 ? (
+                    <Trophy size={22} className={trophyColors[player.rank]} />
                   ) : (
-                    <span className="text-lg font-bold text-cream/40">
+                    <span className="text-lg font-bold text-cream/30">
                       {player.rank}
                     </span>
                   )}
@@ -138,9 +148,9 @@ export default async function LeaderboardPage() {
 
                 {/* Avatar */}
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-white shadow-lg ${
+                  className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold text-white ${
                     AVATAR_COLORS[i % AVATAR_COLORS.length]
-                  } ${i === 0 && player.wins > 0 ? "ring-2 ring-gold ring-offset-2 ring-offset-jade" : ""}`}
+                  } ${player.rank === 1 && player.wins > 0 ? "ring-2 ring-gold ring-offset-2 ring-offset-[#152b1e]" : ""}`}
                 >
                   {initials}
                 </div>
@@ -150,17 +160,13 @@ export default async function LeaderboardPage() {
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-cream">{player.name}</p>
                     {player.isCurrentUser && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-green/20 text-green font-semibold">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold/20 text-gold font-semibold">
                         YOU
                       </span>
                     )}
                   </div>
                   {player.title && player.title !== "Novice" && (
-                    <p
-                      className={`text-xs font-semibold uppercase tracking-wider ${
-                        i === 0 ? "text-gold" : "text-green"
-                      }`}
-                    >
+                    <p className="text-xs text-cream-muted mt-0.5">
                       {player.title}
                     </p>
                   )}
@@ -168,17 +174,10 @@ export default async function LeaderboardPage() {
 
                 {/* Wins */}
                 <div className="text-right">
-                  <div className="flex items-center gap-1.5 justify-end">
-                    <span
-                      className={`text-2xl font-bold ${
-                        i === 0 && player.wins > 0 ? "text-gold" : "text-cream"
-                      }`}
-                    >
-                      {player.wins}
-                    </span>
-                    {i < 3 && player.wins > 0 && <Trophy size={16} className="text-gold" />}
-                  </div>
-                  <p className="text-[11px] text-cream-muted uppercase tracking-wider">
+                  <p className="text-2xl font-bold text-gold">
+                    {player.wins}
+                  </p>
+                  <p className="text-[10px] text-cream-muted uppercase tracking-wider">
                     wins
                   </p>
                 </div>
@@ -189,17 +188,13 @@ export default async function LeaderboardPage() {
       )}
 
       {/* Sticky Record Win Button */}
-      <div className="fixed bottom-28 left-5 right-5 z-40">
+      <div className="fixed bottom-24 left-5 right-5 z-40">
         <Link href="/sessions">
-          <button className="btn-green w-full py-4 text-base flex items-center justify-center gap-2 shadow-xl">
-            <span className="text-lg">+</span>
-            Record a Win
+          <button className="btn-gold w-full py-4 text-base font-semibold">
+            Record Tonight's Win
           </button>
         </Link>
       </div>
-
-      {/* Spacer for fixed button */}
-      <div className="h-20" />
     </div>
   );
 }

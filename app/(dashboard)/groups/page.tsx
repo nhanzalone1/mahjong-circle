@@ -1,4 +1,4 @@
-import { ChevronLeft, Users, Plus, Copy, ChevronRight } from "lucide-react";
+import { ChevronLeft, Users, Copy } from "lucide-react";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -26,7 +26,7 @@ export default async function GroupsPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/dashboard"
-          className="w-11 h-11 rounded-xl bg-surface flex items-center justify-center text-cream/70 hover:text-cream transition shadow-card"
+          className="w-11 h-11 rounded-xl bg-[#152b1e] flex items-center justify-center text-cream/70 hover:text-cream transition"
         >
           <ChevronLeft size={20} />
         </Link>
@@ -48,17 +48,14 @@ export default async function GroupsPage() {
 
       {/* My Groups */}
       <section>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <p className="section-title">Your Circles</p>
           <span className="text-sm text-cream-muted">{groupsWithCounts.length}</span>
         </div>
 
         {groupsWithCounts.length === 0 ? (
-          <div className="card p-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-surface-raised flex items-center justify-center mx-auto mb-4">
-              <Users size={28} className="text-cream/40" />
-            </div>
-            <p className="text-cream/60 mb-2">No circles yet</p>
+          <div className="text-center py-12">
+            <p className="text-cream/40 mb-2">No circles yet</p>
             <p className="text-sm text-cream-muted">
               Create a circle or join one with an invite code
             </p>
@@ -68,10 +65,10 @@ export default async function GroupsPage() {
             {groupsWithCounts.map((group) => (
               <div
                 key={group.id}
-                className="card p-4 flex items-center gap-4"
+                className="card p-5 flex items-center gap-4"
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center">
-                  <span className="text-2xl">🀄</span>
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <span className="text-xl">🀄</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
@@ -80,7 +77,7 @@ export default async function GroupsPage() {
                     </p>
                     {group.role === "admin" && (
                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold/20 text-gold font-semibold">
-                        ADMIN
+                        Admin
                       </span>
                     )}
                   </div>
@@ -89,7 +86,7 @@ export default async function GroupsPage() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-cream-muted mb-1">Invite Code</p>
+                  <p className="text-xs text-cream-muted mb-1">Code</p>
                   <p className="font-mono text-sm text-gold">{group.inviteCode}</p>
                 </div>
               </div>

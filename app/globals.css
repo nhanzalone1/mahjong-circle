@@ -4,15 +4,15 @@
 
 :root {
   --jade: #0D1F17;
-  --jade-light: #162A1F;
-  --jade-lighter: #1E3829;
+  --jade-light: #152b1e;
+  --jade-raised: #1a3325;
   --gold: #C9A84C;
-  --gold-light: #f0d080;
+  --gold-light: #e0c068;
+  --gold-dark: #a8883a;
   --cream: #F5ECD7;
   --cream-muted: #8B8579;
   --green: #22C55E;
-  --yellow: #EAB308;
-  --red: #EF4444;
+  --red: #dc6b5f;
 }
 
 * {
@@ -44,63 +44,110 @@ body {
 /* Custom Components */
 @layer components {
   .card {
-    @apply bg-surface rounded-2xl border border-white/5;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.15);
+    @apply rounded-2xl;
+    background: var(--jade-light);
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15);
   }
 
   .card-featured {
-    @apply bg-surface-raised rounded-2xl;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+    @apply rounded-2xl;
+    background: var(--jade-raised);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.2);
   }
 
+  /* Primary gold button */
   .btn-primary {
-    @apply px-6 py-3 rounded-xl font-semibold text-jade transition-all;
-    background: linear-gradient(135deg, #C9A84C 0%, #E0C068 50%, #C9A84C 100%);
+    @apply px-6 py-3.5 rounded-xl font-semibold text-jade transition-all;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
     box-shadow: 0 4px 16px rgba(201,168,76,0.3);
   }
 
   .btn-primary:hover {
-    box-shadow: 0 6px 24px rgba(201,168,76,0.4);
+    box-shadow: 0 6px 24px rgba(201,168,76,0.45);
     transform: translateY(-1px);
   }
 
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Gold button (replaces green) */
+  .btn-gold {
+    @apply px-6 py-3.5 rounded-xl font-semibold text-jade transition-all;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+  }
+
+  .btn-gold:hover {
+    box-shadow: 0 6px 24px rgba(201,168,76,0.45);
+    transform: translateY(-1px);
+  }
+
+  .btn-gold:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Ghost/outline button */
+  .btn-ghost {
+    @apply px-6 py-3.5 rounded-xl font-semibold transition-all;
+    color: var(--gold);
+    background: transparent;
+    border: 1.5px solid var(--gold);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(201,168,76,0.1);
+  }
+
+  /* Keep btn-green for backwards compat but make it gold */
   .btn-green {
-    @apply px-6 py-3 rounded-xl font-semibold text-white bg-green transition-all;
-    box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+    @apply px-6 py-3.5 rounded-xl font-semibold text-jade transition-all;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
   }
 
   .btn-green:hover {
-    @apply bg-green/90;
-    box-shadow: 0 6px 24px rgba(34,197,94,0.4);
+    box-shadow: 0 6px 24px rgba(201,168,76,0.45);
     transform: translateY(-1px);
   }
 
+  /* Status badges */
   .badge {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
   }
 
   .badge-coming {
-    @apply bg-green/15 text-green border border-green/30;
+    @apply bg-green/15 text-green;
   }
 
   .badge-maybe {
-    @apply bg-yellow/15 text-yellow border border-yellow/30;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
   }
 
   .badge-cant {
-    @apply bg-red/15 text-red border border-red/30;
+    background: rgba(220,107,95,0.15);
+    color: var(--red);
   }
 
   .badge-winner {
-    @apply bg-gold/20 text-gold border border-gold/30;
+    background: rgba(201,168,76,0.2);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
   }
 
-  .badge-green {
-    @apply bg-green/15 text-green border border-green/30 uppercase tracking-wider;
+  .badge-upcoming {
+    @apply bg-green/15 text-green uppercase tracking-widest text-[10px] font-bold px-3 py-1.5;
   }
 
   .section-title {
-    @apply text-xs font-semibold tracking-[0.15em] uppercase text-gold;
+    @apply text-xs font-semibold tracking-[0.12em] uppercase;
+    color: var(--cream-muted);
   }
 
   .avatar {
@@ -108,7 +155,24 @@ body {
   }
 
   .input {
-    @apply w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-cream placeholder:text-cream-muted focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20 transition;
+    @apply w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-cream placeholder:text-cream-muted/60 focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20 transition;
+  }
+
+  /* Stat box */
+  .stat-box {
+    @apply rounded-xl text-center;
+    background: var(--jade-light);
+    padding: 1.25rem;
+  }
+
+  .stat-number {
+    @apply text-3xl font-bold;
+    color: var(--gold);
+  }
+
+  .stat-label {
+    @apply text-xs uppercase tracking-wider mt-1;
+    color: var(--cream-muted);
   }
 }
 
@@ -116,7 +180,7 @@ body {
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -125,7 +189,7 @@ body {
 }
 
 .animate-fade-up {
-  animation: fadeUp 0.5s ease-out forwards;
+  animation: fadeUp 0.4s ease-out forwards;
 }
 
 /* Scrollbar */

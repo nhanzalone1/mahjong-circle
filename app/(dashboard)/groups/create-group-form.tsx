@@ -41,22 +41,22 @@ export default function CreateGroupForm() {
         <button
           type="submit"
           disabled={isPending || !name.trim()}
-          className="w-12 h-12 rounded-xl bg-gold flex items-center justify-center text-jade shadow-lg hover:bg-gold-light transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-14 h-14 rounded-xl bg-gold flex items-center justify-center text-jade hover:bg-gold-light transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? (
-            <Loader2 size={20} className="animate-spin" />
+            <Loader2 size={22} className="animate-spin" />
           ) : (
-            <Plus size={20} />
+            <Plus size={22} />
           )}
         </button>
       </div>
 
       {message && (
         <div
-          className={`flex items-center gap-2 p-3 rounded-xl text-sm ${
+          className={`flex items-center gap-2 p-4 rounded-xl text-sm ${
             message.type === "success"
-              ? "bg-green/20 text-green"
-              : "bg-red/20 text-red-400"
+              ? "bg-green/10 text-green"
+              : "bg-[#dc6b5f]/10 text-[#dc6b5f]"
           }`}
         >
           {message.type === "success" ? <Check size={16} /> : <X size={16} />}

@@ -1,10 +1,20 @@
-import { ChevronLeft, UserPlus, Copy, Check, Users, Trash2 } from "lucide-react";
+import { ChevronLeft, Users, Copy } from "lucide-react";
 import Link from "next/link";
 import { getCurrentUser, getOrCreateProfile } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getFriendsWithProfiles } from "./actions";
 import AddFriendForm from "./add-friend-form";
 import RemoveFriendButton from "./remove-friend-button";
+import CopyCodeButton from "../profile/copy-code-button";
+
+const AVATAR_COLORS = [
+  "bg-emerald-600",
+  "bg-amber-600",
+  "bg-rose-600",
+  "bg-violet-600",
+  "bg-cyan-600",
+  "bg-orange-600",
+];
 
 export default async function FriendsPage() {
   const user = await getCurrentUser();
@@ -19,7 +29,7 @@ export default async function FriendsPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/profile"
-          className="w-11 h-11 rounded-xl bg-surface flex items-center justify-center text-cream/70 hover:text-cream transition shadow-card"
+          className="w-11 h-11 rounded-xl bg-[#152b1e] flex items-center justify-center text-cream/70 hover:text-cream transition"
         >
           <ChevronLeft size={20} />
         </Link>
@@ -30,11 +40,14 @@ export default async function FriendsPage() {
       {/* Your Invite Code */}
       <section>
         <p className="section-title mb-3">Your Invite Code</p>
-        <div className="card p-5 text-center">
-          <p className="font-mono text-3xl font-bold text-gold tracking-[0.3em] mb-3">
-            {profile.inviteCode}
-          </p>
-          <p className="text-sm text-cream-muted">
+        <div className="card p-6">
+          <div className="flex items-center justify-between">
+            <p className="font-mono text-3xl font-bold text-gold tracking-[0.2em]">
+              {profile.inviteCode}
+            </p>
+            <CopyCodeButton code={profile.inviteCode} />
+          </div>
+          <p className="text-sm text-cream-muted mt-3">
             Share this code with friends so they can add you
           </p>
         </div>
@@ -48,24 +61,21 @@ export default async function FriendsPage() {
 
       {/* Friends List */}
       <section>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <p className="section-title">Your Friends</p>
           <span className="text-sm text-cream-muted">{friends.length}</span>
         </div>
 
         {friends.length === 0 ? (
-          <div className="card p-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-surface-raised flex items-center justify-center mx-auto mb-4">
-              <Users size={28} className="text-cream/40" />
-            </div>
-            <p className="text-cream/60 mb-2">No friends yet</p>
+          <div className="text-center py-12">
+            <p className="text-cream/40 mb-2">No friends yet</p>
             <p className="text-sm text-cream-muted">
               Enter a friend's invite code above to connect
             </p>
           </div>
         ) : (
           <div className="space-y-3">
-            {friends.map((friend) => {
+            {friends.map((friend, i) => {
               const initials = friend.displayName
                 .split(" ")
                 .map(n => n[0])
@@ -76,9 +86,9 @@ export default async function FriendsPage() {
               return (
                 <div
                   key={friend.id}
-                  className="card p-4 flex items-center gap-4"
+                  className="card p-5 flex items-center gap-4"
                 >
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-lg font-bold text-white">
+                  <div className={`w-12 h-12 rounded-full ${AVATAR_COLORS[i % AVATAR_COLORS.length]} flex items-center justify-center font-semibold text-white`}>
                     {initials}
                   </div>
                   <div className="flex-1 min-w-0">
