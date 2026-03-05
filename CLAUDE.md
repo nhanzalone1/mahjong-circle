@@ -8,10 +8,17 @@
 - **Styling**: Tailwind CSS + custom design tokens
 - **Deployment**: Vercel
 
-## Design System
-- Deep jade background `#0D1F17`, gold accent `#C9A84C`, cream text `#F5ECD7`
-- Fonts: Playfair Display (headings) + DM Sans (body)
-- Dark mode first, mobile-first
+## Design System (Light Theme)
+- **Page background**: light cream `#F5ECD7`
+- **Cards**: pure white `#FFFFFF` with soft drop shadows
+- **Primary text**: dark jade `#0D1F17`
+- **Secondary text**: gray `#6B7280`
+- **Primary buttons**: dark green `#1a3d2b`
+- **Accent/highlights**: gold `#C9A84C`
+- **Bottom nav**: white background, gold active state
+- **Auth page**: dark theme (jade `#0D1F17` background) as dramatic entrance
+- **Fonts**: Playfair Display (headings) + DM Sans (body)
+- **Style**: Light mode, mobile-first (like Robinhood, Airbnb, Calm)
 
 ## Auth Pattern
 - Server Components/Actions → `import { getCurrentUser } from "@/lib/auth"`
@@ -39,8 +46,13 @@ npm run db:push       # push schema changes to Neon
 npm run db:studio     # visual DB browser at localhost:4983
 ```
 
-## Pages Still To Build
-1. sessions/page.tsx — list + create sessions
-2. sessions/[id]/page.tsx — RSVP + record winner
-3. Group creation + invite code join flow
-4. Profile settings
+## Key Pages
+- `/dashboard` — Home with next game, RSVPs, quick links
+- `/sessions` — List of upcoming/past games
+- `/sessions/[id]` — Session detail with RSVP + record winner
+- `/sessions/new` — Create new game night
+- `/leaderboard` — Friends leaderboard by wins
+- `/profile` — User profile with stats, invite code
+- `/friends` — Add/manage friends via invite codes
+- `/groups` — Create/join circles (groups)
+- `/auth` — Login/signup (dark theme)
